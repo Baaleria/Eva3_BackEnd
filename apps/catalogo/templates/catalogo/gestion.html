@@ -3,15 +3,89 @@
 {% block title %}Inventario | Valeria's Vanity{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Inventario</h1>
-    <a class="btn btn-primary" href="{% url 'catalogo:crear' %}">Nuevo producto</a>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+        <h1 class="mb-0">Inventario</h1>
+        <p class="text-gris-rosa mb-0">{{ productos|length }} productos registrados</p>
+    </div>
+    <a href="{% url 'catalogo:crear' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Nuevo producto
+    </a>
 </div>
-<ul class="list-group">
-    {% for producto in productos %}
-        <li class="list-group-item">{{ producto.nombre }} — Stock: {{ producto.stock }}</li>
-    {% empty %}
-        <li class="list-group-item">No hay productos registrados.</li>
-    {% endfor %}
-</ul>
+
+<div class="card shadow-sm border-0">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Foto</th>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-center">Stock</th>
+                    <th>Estado</th>
+                    <th class="text-center">Visible</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="miniatura-tabla">
+                        {% else %}
+                            <span class="miniatura-tabla bg-rosa-suave d-inline-flex align-items-center justify-content-center">
+                                <i class="bi bi-stars text-rosa"></i>
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="small">{{ producto.codigo }}</td>
+                    <td>
+                        <span class="fw-semibold">{{ producto.nombre }}</span><br>
+                        <span class="small text-gris-rosa">{{ producto.marca }}</span>
+                    </td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td class="text-end">{{ producto.precio_formateado }}</td>
+                    <td class="text-center">{{ producto.stock }}</td>
+                    <td>
+                        {% if producto.estado == 'DISP' %}
+                            <span class="badge bg-success-subtle text-success">{{ producto.get_estado_display }}</span>
+                        {% elif producto.estado == 'AGOT' %}
+                            <span class="badge bg-danger-subtle text-danger">{{ producto.get_estado_display }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary">{{ producto.get_estado_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if producto.activo %}
+                            <i class="bi bi-eye text-success" title="Visible en el catálogo"></i>
+                        {% else %}
+                            <i class="bi bi-eye-slash text-muted" title="Oculto"></i>
+                        {% endif %}
+                    </td>
+                    <td class="text-end text-nowrap">
+                        {% if producto.activo %}
+                            <a href="{% url 'catalogo:detalle' producto.slug %}" class="btn btn-sm btn-outline-dark" title="Ver">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'catalogo:editar' producto.slug %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'catalogo:eliminar' producto.slug %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center text-gris-rosa py-4">No hay productos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

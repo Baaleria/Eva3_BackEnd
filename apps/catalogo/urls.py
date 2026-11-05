@@ -8,5 +8,7 @@ urlpatterns = [
     path('', views.lista, name='lista'),
     path('gestion/', views.gestion, name='gestion'),
     path('crear/', views.crear, name='crear'),
+    path('editar/<slug:slug>/', views.editar, name='editar'),
+    path('eliminar/<slug:slug>/', views.eliminar, name='eliminar'),
     path('<slug:slug>/', views.detalle, name='detalle'),
 ]

@@ -31,11 +31,6 @@ class Command(BaseCommand):
             ('MAQ-001', 'Rubor Barra Blushin Charm', 'Catrice', 'Rubor tono tostado', 'Maquillaje', 5990, 10, False),
         ]
 
-        # El catálogo queda compuesto solo por los productos definidos arriba.
-        codigos_actuales = [producto[0] for producto in productos]
-        Producto.objects.exclude(codigo__in=codigos_actuales).delete()
-        Categoria.objects.exclude(nombre__in=categorias).delete()
-
         for codigo, nombre, marca, contenido, categoria, precio, stock, destacado in productos:
             Producto.objects.update_or_create(
                 codigo=codigo,

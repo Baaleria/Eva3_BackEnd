@@ -1,5 +1,5 @@
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -56,17 +56,61 @@ def detalle(request, slug):
     return render(request, 'catalogo/detalle.html', {'producto': producto})
 
 
-@staff_member_required
+def es_administrador(user):
+    """Solo el personal de la tienda (is_staff) administra el catálogo."""
+    return user.is_staff
+
+
+@login_required
+@user_passes_test(es_administrador, login_url='catalogo:lista')
 def gestion(request):
-    productos = Producto.objects.select_related('categoria')
+    productos = Producto.objects.select_related('categoria').order_by('categoria__nombre', 'nombre')
     return render(request, 'catalogo/gestion.html', {'productos': productos})
 
 
-@staff_member_required
+@login_required
+@user_passes_test(es_administrador, login_url='catalogo:lista')
 def crear(request):
-    form = ProductoForm(request.POST or None, request.FILES or None)
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        messages.success(request, 'Producto creado correctamente.')
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save()
+            messages.success(request, f'Producto "{producto.nombre}" creado correctamente.')
+            return redirect('catalogo:gestion')
+    else:
+        form = ProductoForm()
+    return render(request, 'catalogo/producto.html', {
+        'form': form,
+        'titulo': 'Nuevo producto',
+    })
+
+
+@login_required
+@user_passes_test(es_administrador, login_url='catalogo:lista')
+def editar(request, slug):
+    producto = get_object_or_404(Producto, slug=slug)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Producto "{producto.nombre}" actualizado correctamente.')
+            return redirect('catalogo:gestion')
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'catalogo/producto.html', {
+        'form': form,
+        'producto': producto,
+        'titulo': f'Editar: {producto.nombre}',
+    })
+
+
+@login_required
+@user_passes_test(es_administrador, login_url='catalogo:lista')
+def eliminar(request, slug):
+    producto = get_object_or_404(Producto, slug=slug)
+    if request.method == 'POST':
+        nombre = producto.nombre
+        producto.delete()
+        messages.success(request, f'Producto "{nombre}" eliminado.')
         return redirect('catalogo:gestion')
-    return render(request, 'catalogo/crear.html', {'form': form})
+    return render(request, 'catalogo/conf_eliminar.html', {'producto': producto})

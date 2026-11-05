@@ -141,3 +141,10 @@ h1, h2, h3, h4, .fuente-marca {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+/* ---------- Miniaturas en la tabla de inventario ---------- */
+.miniatura-tabla {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: .5rem;
+}

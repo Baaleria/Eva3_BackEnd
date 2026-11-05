@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar producto | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 p-4 text-center">
+            <i class="bi bi-exclamation-triangle text-danger display-4"></i>
+            <h1 class="h3 mt-2">¿Eliminar este producto?</h1>
+
+            <div class="bg-rosa-suave rounded-3 p-3 my-3">
+                <p class="fw-bold mb-1">{{ producto.nombre }}</p>
+                <p class="small text-gris-rosa mb-0">
+                    {{ producto.codigo }} · {{ producto.marca }} · {{ producto.categoria.nombre }}
+                </p>
+            </div>
+
+            <p class="text-gris-rosa small">Esta acción no se puede deshacer.</p>
+
+            <form method="post" class="d-flex justify-content-center gap-2">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger px-4">Sí, eliminar</button>
+                <a href="{% url 'catalogo:gestion' %}" class="btn btn-outline-dark">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
