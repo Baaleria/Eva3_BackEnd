@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ producto.nombre }} | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<h1>{{ producto.nombre }}</h1>
+<p>{{ producto.marca }} · {{ producto.categoria }}</p>
+<p>{{ producto.descripcion }}</p>
+<p><strong>{{ producto.precio_formateado }}</strong></p>
+<p>{% if producto.en_stock %}Stock disponible: {{ producto.stock }}{% else %}Producto agotado{% endif %}</p>
+<a class="btn btn-outline-primary" href="{% url 'catalogo:lista' %}">Volver al catálogo</a>
+{% endblock %}

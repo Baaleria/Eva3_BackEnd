@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingresar | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<h1>Ingresar</h1>
+<form method="post" class="card p-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Ingresar</button>
+</form>
+{% endblock %}

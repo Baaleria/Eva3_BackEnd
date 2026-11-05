@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi perfil | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<h1>Mi perfil</h1>
+<p>Usuario: {{ request.user.username }}</p>
+<p>Correo: {{ request.user.email|default:'No registrado' }}</p>
+{% endblock %}

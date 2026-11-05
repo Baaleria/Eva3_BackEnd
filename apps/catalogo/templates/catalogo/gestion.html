@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventario | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Inventario</h1>
+    <a class="btn btn-primary" href="{% url 'catalogo:crear' %}">Nuevo producto</a>
+</div>
+<ul class="list-group">
+    {% for producto in productos %}
+        <li class="list-group-item">{{ producto.nombre }} — Stock: {{ producto.stock }}</li>
+    {% empty %}
+        <li class="list-group-item">No hay productos registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

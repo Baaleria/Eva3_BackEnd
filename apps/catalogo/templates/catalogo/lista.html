@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<h1>Catálogo</h1>
+{% if productos %}
+    <div class="row g-3">
+        {% for producto in productos %}
+            <article class="col-md-4">
+                <div class="card h-100 p-3">
+                    <h2 class="h4">{{ producto.nombre }}</h2>
+                    <p>{{ producto.marca }} · {{ producto.precio_formateado }}</p>
+                    <a class="btn btn-primary" href="{% url 'catalogo:detalle' producto.slug %}">Ver producto</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Aún no hay productos disponibles.</p>
+{% endif %}
+{% endblock %}

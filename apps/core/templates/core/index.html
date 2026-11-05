@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<section class="bg-rosa-suave rounded-4 p-4 p-lg-5 text-center">
+    <h1 class="display-4">Tu rutina, a tu manera</h1>
+    <p class="lead text-gris-rosa mx-auto" style="max-width: 36rem;">
+        Skincare, cabello y maquillaje elegidos para que te sientas bien cada día.
+    </p>
+    <a href="{% url 'catalogo:lista' %}" class="btn btn-primary btn-lg">Ver catálogo</a>
+</section>
+{% endblock %}
