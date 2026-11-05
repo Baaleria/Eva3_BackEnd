@@ -1,0 +1,143 @@
+:root {
+    --vanity-rosa: #C93A75;        
+    --vanity-rosa-hover: #AE2C61;
+    --vanity-rosa-suave: #FCE4EC;  
+    --vanity-blush: #FFF5F8;       
+    --vanity-ciruela: #3B1F2B;     
+    --vanity-gris-rosa: #7A5C68;   
+    --vanity-champan: #E9D5B5;     
+
+    --bs-body-bg: var(--vanity-blush);
+    --bs-body-color: var(--vanity-ciruela);
+    --bs-body-font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --bs-heading-color: var(--vanity-ciruela);
+    --bs-link-color: var(--vanity-rosa);
+    --bs-link-hover-color: var(--vanity-rosa-hover);
+    --bs-link-color-rgb: 201, 58, 117;
+    --bs-link-hover-color-rgb: 174, 44, 97;
+    --bs-primary: var(--vanity-rosa);
+    --bs-primary-rgb: 201, 58, 117;
+    --bs-secondary-color: var(--vanity-gris-rosa);
+    --bs-border-color: #F3CFDB;
+    --bs-border-radius: .75rem;
+    --bs-border-radius-lg: 1rem;
+}
+
+h1, h2, h3, h4, .fuente-marca {
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-weight: 600;
+}
+
+/* ---------- Botones: btn-primary y btn-outline-primary quedan rosados ---------- */
+.btn { border-radius: 50rem; font-weight: 600; }
+.btn-primary {
+    --bs-btn-bg: var(--vanity-rosa);
+    --bs-btn-border-color: var(--vanity-rosa);
+    --bs-btn-hover-bg: var(--vanity-rosa-hover);
+    --bs-btn-hover-border-color: var(--vanity-rosa-hover);
+    --bs-btn-active-bg: var(--vanity-rosa-hover);
+    --bs-btn-active-border-color: var(--vanity-rosa-hover);
+    --bs-btn-disabled-bg: var(--vanity-rosa);
+    --bs-btn-disabled-border-color: var(--vanity-rosa);
+    --bs-btn-focus-shadow-rgb: 201, 58, 117;
+}
+.btn-outline-primary {
+    --bs-btn-color: var(--vanity-rosa);
+    --bs-btn-border-color: var(--vanity-rosa);
+    --bs-btn-hover-bg: var(--vanity-rosa);
+    --bs-btn-hover-border-color: var(--vanity-rosa);
+    --bs-btn-active-bg: var(--vanity-rosa-hover);
+    --bs-btn-active-border-color: var(--vanity-rosa-hover);
+    --bs-btn-focus-shadow-rgb: 201, 58, 117;
+}
+.btn-outline-dark {
+    --bs-btn-color: var(--vanity-ciruela);
+    --bs-btn-border-color: var(--vanity-ciruela);
+    --bs-btn-hover-bg: var(--vanity-ciruela);
+    --bs-btn-hover-border-color: var(--vanity-ciruela);
+}
+
+/* ---------- Formularios, paginación y badges ---------- */
+.form-control:focus, .form-select:focus {
+    border-color: var(--vanity-rosa);
+    box-shadow: 0 0 0 .25rem rgba(201, 58, 117, .2);
+}
+.form-check-input:checked {
+    background-color: var(--vanity-rosa);
+    border-color: var(--vanity-rosa);
+}
+.page-link { color: var(--vanity-rosa); }
+.page-link:hover { color: var(--vanity-rosa-hover); background-color: var(--vanity-rosa-suave); }
+.page-item.active .page-link { background-color: var(--vanity-rosa); border-color: var(--vanity-rosa); color: #fff; }
+.bg-primary { background-color: var(--vanity-rosa) !important; }
+.text-primary { color: var(--vanity-rosa) !important; }
+.list-group-item.active { background-color: var(--vanity-rosa); border-color: var(--vanity-rosa); }
+
+/* ---------- Tarjetas ---------- */
+.card { border-color: var(--bs-border-color); background-color: #fff; }
+.card-producto { transition: transform .15s ease, box-shadow .15s ease; }
+.card-producto:hover { transform: translateY(-3px); box-shadow: 0 .75rem 1.5rem rgba(201, 58, 117, .12); }
+
+/* ---------- Navbar ---------- */
+.navbar-vanity {
+    background-color: #fff;
+    border-bottom: 2px solid var(--vanity-rosa-suave);
+}
+.navbar-brand.marca {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--vanity-rosa);
+    letter-spacing: .01em;
+}
+.navbar-brand.marca:hover { color: var(--vanity-rosa-hover); }
+.navbar-vanity .nav-link { color: var(--vanity-ciruela); font-weight: 600; }
+.navbar-vanity .nav-link:hover { color: var(--vanity-rosa); }
+.navbar-vanity .nav-link.active {
+    color: var(--vanity-rosa);
+    box-shadow: inset 0 -2px 0 var(--vanity-rosa);
+}
+.badge-carrito {
+    background-color: var(--vanity-rosa);
+    color: #fff;
+    font-size: .7rem;
+}
+.dropdown-menu { border-color: var(--bs-border-color); border-radius: var(--bs-border-radius); }
+.dropdown-item:hover { background-color: var(--vanity-rosa-suave); }
+
+/* ---------- Utilidades de la marca ---------- */
+.bg-rosa-suave { background-color: var(--vanity-rosa-suave) !important; }
+.text-rosa { color: var(--vanity-rosa) !important; }
+.text-gris-rosa { color: var(--vanity-gris-rosa) !important; }
+.borde-champan { border-color: var(--vanity-champan) !important; }
+
+/* ---------- Footer ---------- */
+.footer-vanity {
+    background-color: var(--vanity-ciruela);
+    color: #F6DDE6;
+    border-top: 4px solid var(--vanity-champan);
+}
+.footer-vanity a { color: #F6DDE6; text-decoration: none; }
+.footer-vanity a:hover { color: #fff; text-decoration: underline; }
+
+/* ---------- Accesibilidad ---------- */
+:focus-visible { outline: 3px solid var(--vanity-rosa); outline-offset: 2px; }
+.skip-link {
+    position: absolute; left: -999px; top: 0;
+    background: var(--vanity-rosa); color: #fff; padding: .5rem 1rem; z-index: 2000;
+}
+.skip-link:focus { left: 0; color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+    .card-producto { transition: none; }
+    .card-producto:hover { transform: none; }
+}
+
+/* ---------- Descripción cortada a 2 líneas (tarjetas) ---------- */
+.texto-2-lineas {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
