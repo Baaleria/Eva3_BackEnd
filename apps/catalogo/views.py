@@ -122,14 +122,11 @@ def eliminar(request, id):
     if request.method == 'POST':
         nombre = producto.nombre
         producto.delete()
-        messages.success(
-            request,
-            f"Producto '{nombre}' eliminado.",
-        )
+        messages.success(request, f'Producto "{nombre}" eliminado.')
         return redirect('catalogo:gestion')
 
     return render(
         request,
-        'catalogo/producto_confirmar_eliminar.html',
+        'catalogo/conf_eliminar.html',
         {'producto': producto},
     )
