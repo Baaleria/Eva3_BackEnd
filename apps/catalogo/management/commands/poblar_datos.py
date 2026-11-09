@@ -53,3 +53,24 @@ class Command(BaseCommand):
             )
 
         self.stdout.write(self.style.SUCCESS('Datos cargados correctamente.'))
+
+        # Usuarios de prueba
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser(
+                username='admin',
+                email='admin@valeriasvanity.cl',
+                password='Admin12345!',
+            )
+
+        if not User.objects.filter(username='cliente').exists():
+            User.objects.create_user(
+                username='cliente',
+                email='cliente@valeriasvanity.cl',
+                password='Cliente12345!',
+                first_name='Clienta',
+                last_name='Demo',
+            )
+
+        self.stdout.write(
+            self.style.SUCCESS('Datos cargados correctamente.')
+        )

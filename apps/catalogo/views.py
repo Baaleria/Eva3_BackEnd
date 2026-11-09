@@ -106,7 +106,7 @@ def editar(request, id):
     else:
         form = ProductoForm(instance=producto)
 
-    return render(request, 'catalogo/producto_form.html', {
+    return render(request, 'catalogo/producto.html', {
         'form': form,
         'producto': producto,
         'titulo_accion': 'Editar Producto',
