@@ -18,7 +18,7 @@ class Command(BaseCommand):
         ]
         categorias = {}
         for nombre, descripcion in datos_categorias:
-            categoria, _ = Categoria.objects.update_or_create(
+            categoria, _ = Categoria.objects.get_or_create(
                 nombre=nombre,
                 defaults={'descripcion': descripcion},
             )
@@ -26,9 +26,14 @@ class Command(BaseCommand):
 
         productos = [
             # codigo, nombre, marca, contenido, categoria, precio, stock, destacado
-            ('CAB-001', 'Gel para el cabello Fijación Alta', 'Etniker', 'Gel espeso', 'Cabello', 34990, 10, False),
-            ('CAB-002', 'Shampoo para cabello rizado', "L'OREAL", 'Shampoo con glicerina', 'Cabello', 27621, 10, False),
-            ('MAQ-001', 'Rubor Barra Blushin Charm', 'Catrice', 'Rubor tono tostado', 'Maquillaje', 5990, 10, False),
+            ('CAB-001','Gel para el cabello Fijación Alta', 'Etniker', '1000ml', 'Cabello', 34990, 10, False),
+            ('CAB-002','Shampoo para cabello rizado', "L'OREAL", '300ml', 'Cabello', 27621, 10, False),
+            ('MAQ-001','Rubor Barra Blushin Charm', 'Catrice', '5.5g', 'Maquillaje', 5990, 10, True),
+            ('MAQ-002','Mascara de pestañas voluminizadora','L´OREAL','9.9ml', 'Maquillaje',15390,3,False),
+            ('SKN-001','Serum Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (SPF50+ PA++++) ', 'SKIN1004', '50ml', 'Skincare', 13383,5, True),
+            ('SKN-002', 'Madagascar Centella Poremizing Quick Clay Stick Mask', 'SKIN1004', '27g', 'Skincare',28900, 10,False),
+            ('CUE-001','Loción coporal Coco & Aceite de Monoi','NIVEA','400ml','Cuerpo',8599,10, True),
+            ('CUE-002', 'Dove Tono Uniforme', 'Dove', '45g', 'Cuerpo', 1690,10,False),
         ]
 
         for codigo, nombre, marca, contenido, categoria, precio, stock, destacado in productos:
@@ -39,20 +44,12 @@ class Command(BaseCommand):
                     'marca': marca,
                     'contenido': contenido,
                     'categoria': categorias[categoria],
-                    'descripcion': f'{nombre} de {marca}, ideal para tu rutina diaria.',
+                    'descripcion': f'{nombre} de {marca}',
                     'precio': precio,
                     'stock': stock,
                     'estado': 'DISP' if stock > 0 else 'AGOT',
                     'destacado': destacado,
                 },
             )
-
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser(
-                'admin', 'admin@valeriasvanity.cl', 'Admin12345!')
-        if not User.objects.filter(username='cliente').exists():
-            User.objects.create_user(
-                'cliente', 'cliente@valeriasvanity.cl', 'Cliente12345!',
-                first_name='Clienta', last_name='Demo')
 
         self.stdout.write(self.style.SUCCESS('Datos cargados correctamente.'))

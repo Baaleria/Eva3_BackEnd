@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
+
 from .forms import ProductoForm
 from .models import Categoria, Producto
 
@@ -57,8 +58,7 @@ def detalle(request, slug):
 
 
 def es_administrador(user):
-    """Solo el personal de la tienda (is_staff) administra el catálogo."""
-    return user.is_staff
+    return user.is_authenticated and (user.is_staff or user.is_superuser)
 
 
 @login_required
@@ -87,30 +87,49 @@ def crear(request):
 
 @login_required
 @user_passes_test(es_administrador, login_url='catalogo:lista')
-def editar(request, slug):
-    producto = get_object_or_404(Producto, slug=slug)
+def editar(request, id):
+    producto = get_object_or_404(Producto, id=id)
+
     if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        form = ProductoForm(
+            request.POST,
+            request.FILES,
+            instance=producto,
+        )
         if form.is_valid():
             form.save()
-            messages.success(request, f'Producto "{producto.nombre}" actualizado correctamente.')
+            messages.success(
+                request,
+                f"Producto '{producto.nombre}' actualizado.",
+            )
             return redirect('catalogo:gestion')
     else:
         form = ProductoForm(instance=producto)
-    return render(request, 'catalogo/producto.html', {
+
+    return render(request, 'catalogo/producto_form.html', {
         'form': form,
         'producto': producto,
-        'titulo': f'Editar: {producto.nombre}',
+        'titulo_accion': 'Editar Producto',
+        'boton_texto': 'Actualizar',
     })
 
 
 @login_required
 @user_passes_test(es_administrador, login_url='catalogo:lista')
-def eliminar(request, slug):
-    producto = get_object_or_404(Producto, slug=slug)
+def eliminar(request, id):
+    producto = get_object_or_404(Producto, id=id)
+
     if request.method == 'POST':
         nombre = producto.nombre
         producto.delete()
-        messages.success(request, f'Producto "{nombre}" eliminado.')
+        messages.success(
+            request,
+            f"Producto '{nombre}' eliminado.",
+        )
         return redirect('catalogo:gestion')
-    return render(request, 'catalogo/conf_eliminar.html', {'producto': producto})
+
+    return render(
+        request,
+        'catalogo/producto_confirmar_eliminar.html',
+        {'producto': producto},
+    )
