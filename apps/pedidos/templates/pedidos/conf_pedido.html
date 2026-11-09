@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Comprobante | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h1 class="h3">Compra simulada completada</h1>
+
+    <p>Gracias por comprar en Valeria's Vanity.</p>
+    <p>
+        <strong>Referencia de demostración:</strong> {{ orden_id }}
+    </p>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>${{ item.subtotal }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p>Subtotal: <strong>${{ subtotal }}</strong></p>
+    <p>IVA 19%: <strong>${{ iva }}</strong></p>
+    <p>Total: <strong>${{ total }}</strong></p>
+
+    <p class="text-muted">
+        Este comprobante corresponde a una simulación.
+        No se realizó ningún cobro.
+    </p>
+
+    <a class="btn btn-primary" href="{% url 'catalogo:lista' %}">
+        Volver al catálogo
+    </a>
+</div>
+{% endblock %}

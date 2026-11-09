@@ -8,5 +8,19 @@
 <p>{{ producto.descripcion }}</p>
 <p><strong>{{ producto.precio_formateado }}</strong></p>
 <p>{% if producto.en_stock %}Stock disponible: {{ producto.stock }}{% else %}Producto agotado{% endif %}</p>
+{% if producto.en_stock %}
+    <form method="post"
+          action="{% url 'pedidos:agregar' producto.id %}"
+          class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-bag-plus me-1"></i>
+            Agregar al carrito
+        </button>
+    </form>
+{% else %}
+    <p class="text-danger">Producto sin stock disponible.</p>
+{% endif %} 
+
 <a class="btn btn-outline-primary" href="{% url 'catalogo:lista' %}">Volver al catálogo</a>
 {% endblock %}
