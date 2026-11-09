@@ -35,6 +35,20 @@
                             <th class="bg-rosa-suave">Miembro desde</th>
                             <td>{{ usuario.date_joined|date:"d/m/Y" }}</td>
                         </tr>
+                        <tr>
+                        <th class="bg-rosa-suave">RUT</th>
+                        <td>{{ perfil.rut|default:"No registrado" }}</td>
+                        </tr>
+
+                        <tr>
+                            <th class="bg-rosa-suave">Teléfono</th>
+                            <td>{{ perfil.telefono|default:"No registrado" }}</td>
+                        </tr>
+
+                        <tr>
+                            <th class="bg-rosa-suave">Rol</th>
+                            <td>{{ perfil.get_rol_display }}</td>
+                        </tr>
                     </tbody>
                 </table>
 

@@ -13,6 +13,27 @@ class RegistroForm(UserCreationForm):
     email = forms.EmailField(
         required=True, label="Correo electrónico",
         widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    
+    rut = forms.CharField(
+        max_length=12,
+        required=True,
+        label='RUT',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ej. 12.345.678-5',
+        }),
+    )
+
+    telefono = forms.CharField(
+        max_length=20,
+        required=True,
+        label='Teléfono',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'tel',
+            'placeholder': 'Ej. +56912345678',
+        }),
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User

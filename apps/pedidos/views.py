@@ -133,7 +133,7 @@ def checkout_simulado(request):
 
     del request.session['carrito']
 
-    return render(request, 'pedidos/checkout_exito.html', {
+    return render(request, 'pedidos/conf_pedido.html', {
         'items': items_comprados,
         'subtotal': subtotal,
         'iva': iva,
