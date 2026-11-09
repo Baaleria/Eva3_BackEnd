@@ -148,3 +148,39 @@ h1, h2, h3, h4, .fuente-marca {
     object-fit: cover;
     border-radius: .5rem;
 }
+
+/* ---------- Carrusel de portada ---------- */
+.hero-carrusel { background-color: var(--vanity-rosa-suave); }
+.hero-img { height: 420px; object-fit: cover; }
+
+/* Degradado sobre cada foto para que el texto blanco se lea bien */
+.hero-carrusel .carousel-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(59, 31, 43, .35), rgba(59, 31, 43, .65));
+}
+
+/* Eslogan dentro de cada diapositiva */
+.hero-carrusel .carousel-caption {
+    z-index: 2;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+}
+
+/* Mismo título (serif y blanco) en las 4 diapositivas, sea h1 o p */
+.hero-carrusel .carousel-caption .titulo-hero {
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: .75rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+}
+.hero-carrusel .carousel-caption p:not(.titulo-hero) { color: #fff; }
+
+@media (max-width: 767.98px) {
+    .hero-img { height: 320px; }
+}
