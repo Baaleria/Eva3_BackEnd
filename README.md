@@ -75,9 +75,9 @@ También se puede crear una cuenta nueva desde **Registro**, que queda con rol C
  
 ---
 
-## Bitácora de uso de Inteligencia Artificial
+## Bitácora de prompts
 
-**Herramienta utilizada:** Claude (Anthropic)
+**Herramienta utilizada:** Claude y Chatgpt
 
 ### Caso 1: Validación del código único del producto (ORM)
 
