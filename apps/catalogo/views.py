@@ -109,7 +109,7 @@ def editar(request, id):
     return render(request, 'catalogo/producto.html', {
         'form': form,
         'producto': producto,
-        'titulo_accion': 'Editar Producto',
+        'titulo': 'Editar Producto',
         'boton_texto': 'Actualizar',
     })
 
