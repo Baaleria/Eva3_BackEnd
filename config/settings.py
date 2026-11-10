@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                'apps.pedidos.context_processors.carrito_context',
             ],
         },
     },
@@ -110,15 +113,9 @@ LANGUAGE_CODE = 'es-cl'
 
 TIME_ZONE = 'America/Santiago'
 
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_TZ = True
-
-STATIC_URL = 'static/'
-STATICFILES_DIRS= [BASE_DIR/ 'static']
-STATIC_ROOT= BASE_DIR/'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -128,12 +125,15 @@ LOGIN_URL = 'usuarios:login'
 LOGIN_REDIRECT_URL = 'catalogo:lista'
 LOGOUT_REDIRECT_URL = 'core:inicio'
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
-
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS= [BASE_DIR/ 'static']
+STATIC_ROOT= BASE_DIR/'staticfiles'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

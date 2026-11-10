@@ -3,7 +3,114 @@
 {% block title %}Carrito | Valeria's Vanity{% endblock %}
 
 {% block content %}
-<h1>Tu carrito</h1>
-<p>Tu carrito está vacío.</p>
-<a class="btn btn-primary" href="{% url 'catalogo:lista' %}">Ir al catálogo</a>
+<h1 class="mb-4">Tu carrito</h1>
+
+{% if esta_vacio %}
+    <p>Tu carrito está vacío.</p>
+
+    <a class="btn btn-primary" href="{% url 'catalogo:lista' %}">
+        Ir al catálogo
+    </a>
+{% else %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items_carrito %}
+                    <tr>
+                        <td>
+                            <strong>{{ item.nombre }}</strong>
+                            <div class="small text-muted">
+                                {{ item.marca }}
+                            </div>
+                        </td>
+
+                        <td>${{ item.precio }}</td>
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <form method="post"
+                                      action="{% url 'pedidos:restar' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-outline-primary btn-sm"
+                                            aria-label="Restar una unidad">
+                                        −
+                                    </button>
+                                </form>
+
+                                <span>{{ item.cantidad }}</span>
+
+                                <form method="post"
+                                      action="{% url 'pedidos:agregar' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-outline-primary btn-sm"
+                                            aria-label="Agregar una unidad">
+                                        +
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+
+                        <td>${{ item.subtotal }}</td>
+
+                        <td>
+                            <form method="post"
+                                  action="{% url 'pedidos:eliminar' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card p-3 my-3">
+        <p>Subtotal: <strong>${{ subtotal }}</strong></p>
+        <p>IVA 19%: <strong>${{ iva }}</strong></p>
+        <p class="mb-0">Total: <strong>${{ total }}</strong></p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary"
+           href="{% url 'catalogo:lista' %}">
+            Seguir comprando
+        </a>
+
+        <form method="post" action="{% url 'pedidos:limpiar' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">
+                Vaciar carrito
+            </button>
+        </form>
+
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'pedidos:checkout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">
+                    Confirmar compra
+                </button>
+            </form>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'usuarios:login' %}">
+                Inicia sesión para comprar
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
 {% endblock %}

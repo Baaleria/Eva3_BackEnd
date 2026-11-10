@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }} | Valeria's Vanity{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h2 mb-0">{{ titulo }}</h1>
+            <a href="{% url 'catalogo:gestion' %}" class="btn btn-outline-dark btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Volver al inventario
+            </a>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            {% if producto and producto.imagen %}
+            <div class="text-center mb-4">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"
+                     class="img-fluid rounded" style="max-height: 180px;">
+                <p class="small text-gris-rosa mt-1 mb-0">Foto actual</p>
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger small">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                {% for field in form %}
+                    {% if field.field.widget.input_type == 'checkbox' %}
+                        <div class="form-check mb-3">
+                            {{ field }}
+                            <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                    {% else %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="text-danger small mb-3 mt-n2">{{ field.errors|join:" " }}</div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                    <a href="{% url 'catalogo:gestion' %}" class="btn btn-outline-dark">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
