@@ -3,6 +3,14 @@
 {% block title %}{{ producto.nombre }} | Valeria's Vanity{% endblock %}
 
 {% block content %}
+{% if producto.imagen %}
+    <div class="text-center mb-4">
+        <img src="{{ producto.imagen.url }}"
+             alt="{{ producto.nombre }}"
+             class="img-fluid rounded shadow-sm"
+             style="max-height: 400px; object-fit: contain;">
+    </div>
+{% endif %}
 <h1>{{ producto.nombre }}</h1>
 <p>{{ producto.marca }} · {{ producto.categoria }}</p>
 <p>{{ producto.descripcion }}</p>
